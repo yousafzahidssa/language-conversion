@@ -11,6 +11,15 @@ STATIC_DIR = 'static'
 if not os.path.exists(STATIC_DIR):
     os.makedirs(STATIC_DIR)
 
+@app.route('/')
+def home():
+    return jsonify({
+        "status": "Flask Translation API is running",
+        "endpoints": {
+            "translate": "POST /translate"
+        }
+    })
+
 @app.route('/translate', methods=['POST'])
 def translate_text():
     data = request.get_json() or {}
@@ -37,4 +46,6 @@ def translate_text():
         return jsonify({'error': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=9091)
+    import os
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
