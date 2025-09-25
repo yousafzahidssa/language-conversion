@@ -1,10 +1,12 @@
 from flask import Flask, render_template, request, jsonify, url_for
+from flask_cors import CORS
 from googletrans import Translator
 from gtts import gTTS
 import os
 import uuid
 
 app = Flask(__name__)
+CORS(app)
 translator = Translator()
 
 STATIC_DIR = 'static'
